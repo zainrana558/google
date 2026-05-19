@@ -1,0 +1,6 @@
+{
+  "name": "luminaa2",
+  "description": "Production-grade streaming video platform with HLS failover, secure OAuth, and high-end cinematic design.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
