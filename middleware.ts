@@ -11,10 +11,19 @@ export default auth((req: NextRequest & { auth: any }) => {
   const { nextUrl } = req;
 
   const isApiAuthRoute = nextUrl.pathname.startsWith("/api/auth");
-  const isPublicRoute = ["/", "/pricing", "/auth/signin"].includes(nextUrl.pathname);
+  const isPublicRoute = ["/", "/pricing", "/auth/signin", "/browse"].includes(nextUrl.pathname);
+  const isWatchRoute = nextUrl.pathname.startsWith("/watch");
   const isAuthRoute = ["/auth/signin"].includes(nextUrl.pathname);
 
   if (isApiAuthRoute) return NextResponse.next();
+
+  // /watch routes are public (movie details/player)
+  if (isWatchRoute) {
+    const response = NextResponse.next();
+    response.headers.set("X-Frame-Options", "DENY");
+    response.headers.set("X-Content-Type-Options", "nosniff");
+    return response;
+  }
 
   if (isAuthRoute) {
     if (isLoggedIn) {
